@@ -42,8 +42,11 @@ public class IO {
 					index++;
 				}
 
+				
+				
 				// reziser
-				if (token[index].charAt(0) == '"') {
+				try {
+					if (token[index].charAt(0) == '"') {
 					// imamo niz
 					lista = listaKadTreba(token, index);
 					fs.setReziser((lista));
@@ -54,6 +57,10 @@ public class IO {
 					fs.setReziser(pom);
 					index++;
 				}
+				} catch (StringIndexOutOfBoundsException e) {
+					fs.setReziser(null);
+				}
+				
 
 				// Cast
 				try {
@@ -72,19 +79,24 @@ public class IO {
 				} catch (StringIndexOutOfBoundsException e) {
 					fs.setCast(null);
 				}
-
+				
 				// drzava
-				if (token[index].charAt(0) == '"') {
-					// imamo niz
-					lista = listaKadTreba(token, index);
-					fs.setDrzava(lista);
-					index++;
-				} else {
-					ArrayList<String> pom = new ArrayList();
-					pom.add(token[index]);
-					fs.setDrzava(pom);
+				try {
+					
+					if (token[index].charAt(0) == '"') {
+						// imamo niz
+						lista = listaKadTreba(token, index);
+						fs.setDrzava(lista);
+						index++;
+					} else {
+						ArrayList<String> pom = new ArrayList();
+						pom.add(token[index]);
+						fs.setDrzava(pom);
 
-					index++;
+						index++;
+					}
+				} catch (StringIndexOutOfBoundsException e) {
+					fs.setDrzava(null);
 				}
 
 				fsl.add(fs);
@@ -118,7 +130,7 @@ public class IO {
 		novaLista.add(tokeni[index].substring(1).trim());
 		index++;
 
-		while (tokeni[index].charAt(tokeni[index].length()) != '"') {
+		while (tokeni[index].charAt(tokeni[index].length()-1) != '"') {
 			novaLista.add(tokeni[index].trim());
 			index++;
 		}
