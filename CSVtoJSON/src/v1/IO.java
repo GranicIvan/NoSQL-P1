@@ -10,6 +10,7 @@ public class IO {
 
 	
 	static int index;
+	static int  exep = 0; 
 	
 	public static ArrayList<FilmSerija> citanjeCSV(String link) {
 		int red = 0;
@@ -63,6 +64,8 @@ public class IO {
 				}
 				} catch (StringIndexOutOfBoundsException e) {
 					fs.setReziser(null);
+					index++;
+					exep++;
 				}
 				
 
@@ -82,6 +85,8 @@ public class IO {
 					}
 				} catch (StringIndexOutOfBoundsException e) {
 					fs.setCast(null);
+					index++;
+					exep++;
 				}
 				
 				// drzava
@@ -101,7 +106,71 @@ public class IO {
 					}
 				} catch (StringIndexOutOfBoundsException e) {
 					fs.setDrzava(null);
+					index++;
+//					exep++;
 				}
+				
+				
+				fs.setDatum_dodavanja(token[index]);// datum
+				index++;
+				
+				try {//Godina izlaska
+					fs.setGodina_izlazka( Integer.parseInt( token[index].trim().substring(0, 4)) );//Godina izlaska
+				} catch (NumberFormatException e) {
+					//e.printStackTrace();
+					fs.setGodina_izlazka(-1);
+					index++;
+					exep++;
+				}finally {
+					index++;
+				}
+				
+				//ogranicenje
+				fs.setOgranicenje(token[index]);
+				index++;
+				
+				// trajanje 
+				fs.setTrajanje(token[index]);
+				index++;
+				
+				
+				//Listed in
+				try {
+					if (token[index].charAt(0) == '"') {// OVDE PUCA KAD JE POLJE PRAZNO
+						// imamo niz
+						lista = listaKadTreba(token);
+						fs.setListed_in(lista);
+						index++;
+					} else {
+						ArrayList<String> pom = new ArrayList();
+						pom.add(token[index]);
+						fs.setListed_in(pom);
+						index++;
+					}
+				} catch (Exception e) {
+					fs.setListed_in(null);
+					index++;
+					exep++;
+				}
+				
+				
+				
+				
+				//Opis
+				try {
+					
+						// imamo niz
+						lista = listaKadTreba(token);
+						fs.setOpis(lista.toString());
+						index++;
+					
+				} catch (Exception e) {
+					fs.setOpis(null);
+					index++;
+					exep++;
+				}
+				
+				
 
 				fsl.add(fs);
 				
@@ -121,6 +190,7 @@ public class IO {
 			np.printStackTrace();
 		} finally {
 			System.out.println("procitali smo: " + red + " redova ");
+			System.out.println("IMALI SMO: " + exep + " exceptiona");
 		}
 
 		return fsl;
@@ -139,7 +209,7 @@ public class IO {
 			index++;
 		}
 		novaLista.add(tokeni[index].substring(0, tokeni[index].length() - 1).trim());
-		index++;
+		//index++;
 		return novaLista;
 
 	}

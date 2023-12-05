@@ -12,6 +12,7 @@ public class FilmSerija {
 	private ArrayList<String> cast;
 	private Map<Integer, String> drzava;
 	private String datum_dodavanja;
+	private String ogranicenje;
 	private int godina_izlazka;
 	private String trajanje;
 	private ArrayList<String> listed_in; //TODO Prevedi nekao
@@ -107,10 +108,20 @@ public class FilmSerija {
 		this.opis = opis;
 	}
 
+	
+	
+	public String getOgranicenje() {
+		return ogranicenje;
+	}
+
+	public void setOgranicenje(String ogranicenje) {
+		this.ogranicenje = ogranicenje;
+	}
+
 	@Override
 	public String toString() {
 		return   id + " : " + tip + " : " + ime + " : " + reziser + "\n" + cast
-				+ "\n" + drzava + "\n" + datum_dodavanja + "\n" + godina_izlazka
+				+ "\n" + drzava + "\n" + datum_dodavanja + "\n" + godina_izlazka + "\n" + ogranicenje 
 				+ "\n" + trajanje + "\n" + listed_in + "\n" + opis 
 				+"\n###############################################################\n" ;
 	}
