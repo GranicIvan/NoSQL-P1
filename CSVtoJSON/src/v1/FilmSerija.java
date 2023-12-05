@@ -1,6 +1,7 @@
 package v1;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class FilmSerija {
 
@@ -9,7 +10,7 @@ public class FilmSerija {
 	private String ime;
 	private ArrayList<String> reziser;
 	private ArrayList<String> cast;
-	private ArrayList<String> drzava;
+	private Map<Integer, String> drzava;
 	private String datum_dodavanja;
 	private int godina_izlazka;
 	private String trajanje;
@@ -56,14 +57,16 @@ public class FilmSerija {
 		this.cast = cast;
 	}
 	
-	public ArrayList<String> getDrzava() {
+
+	
+	public Map<Integer, String> getDrzava() {
 		return drzava;
 	}
-	
-	public void setDrzava(ArrayList<String> drzava) {
+
+	public void setDrzava(Map<Integer, String> drzava) {
 		this.drzava = drzava;
 	}
-	
+
 	public String getDatum_dodavanja() {
 		return datum_dodavanja;
 	}
@@ -102,6 +105,14 @@ public class FilmSerija {
 	
 	public void setOpis(String opis) {
 		this.opis = opis;
+	}
+
+	@Override
+	public String toString() {
+		return   id + " : " + tip + " : " + ime + " : " + reziser + "\n" + cast
+				+ "\n" + drzava + "\n" + datum_dodavanja + "\n" + godina_izlazka
+				+ "\n" + trajanje + "\n" + listed_in + "\n" + opis 
+				+"\n###############################################################\n" ;
 	}
 	
 	
