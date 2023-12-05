@@ -4,9 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class IO {
 
+	
+	static int index;
+	
 	public static ArrayList<FilmSerija> citanjeCSV(String link) {
 		int red = 0;
 		ArrayList<FilmSerija> fsl = new ArrayList();
@@ -15,8 +19,8 @@ public class IO {
 			String s;
 			do {
 				s = br.readLine();
-				System.out.println("imamo s");
-				System.out.println(s);
+				//System.out.println("imamo s");
+				//System.out.println(s);
 				red++;
 
 				String token[] = s.trim().split(",");
@@ -25,7 +29,7 @@ public class IO {
 
 				ArrayList<String> lista = null;
 
-				Integer index = 0;
+				index = 0;
 				fs.setId(token[index]);// id
 				index++;
 				fs.setTip(token[index]);// tip
@@ -34,7 +38,7 @@ public class IO {
 				// ime
 				if (token[index].charAt(0) == '"') {
 					// imamo niz
-					lista = listaKadTreba(token, index);
+					lista = listaKadTreba(token);
 					fs.setIme(lista.toString());
 					index++;
 				} else {
@@ -48,7 +52,7 @@ public class IO {
 				try {
 					if (token[index].charAt(0) == '"') {
 					// imamo niz
-					lista = listaKadTreba(token, index);
+					lista = listaKadTreba(token);
 					fs.setReziser((lista));
 					index++;
 				} else {
@@ -66,7 +70,7 @@ public class IO {
 				try {
 					if (token[index].charAt(0) == '"') {// OVDE PUCA KAD JE POLJE PRAZNO
 						// imamo niz
-						lista = listaKadTreba(token, index);
+						lista = listaKadTreba(token);
 						fs.setCast(lista);
 						index++;
 					} else {
@@ -85,13 +89,13 @@ public class IO {
 					
 					if (token[index].charAt(0) == '"') {
 						// imamo niz
-						lista = listaKadTreba(token, index);
-						fs.setDrzava(lista);
+						lista = listaKadTreba(token);
+						fs.setDrzava(lista.stream().collect(Collectors.toMap(String::hashCode, e -> e)));
 						index++;
 					} else {
 						ArrayList<String> pom = new ArrayList();
 						pom.add(token[index]);
-						fs.setDrzava(pom);
+						fs.setDrzava(pom.stream().collect(Collectors.toMap(String::hashCode, e -> e)));
 
 						index++;
 					}
@@ -100,12 +104,12 @@ public class IO {
 				}
 
 				fsl.add(fs);
-				// -----
-				System.out.println("################################################################");
-				for (String str : token) {
-					System.out.println(str);
-				}
-				System.out.println("################################################################");
+				
+//				System.out.println("################################################################");
+//				for (String str : token) {
+//					System.out.println(str);
+//				}
+//				System.out.println("################################################################");
 
 			} while (s != null);
 
@@ -122,7 +126,7 @@ public class IO {
 		return fsl;
 	}
 
-	public static ArrayList<String> listaKadTreba(String[] tokeni, Integer index) {
+	public static ArrayList<String> listaKadTreba(String[] tokeni) {
 
 		ArrayList<String> novaLista = new ArrayList();
 
