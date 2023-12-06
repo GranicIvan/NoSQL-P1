@@ -8,20 +8,18 @@ import java.util.stream.Collectors;
 
 public class IO {
 
-	
 	static int index;
-	static int  exep = 0; 
+	
 	
 	public static ArrayList<FilmSerija> citanjeCSV(String link) {
 		int red = 0;
 		ArrayList<FilmSerija> fsl = new ArrayList();
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(link));
+		try(BufferedReader br = new BufferedReader(new FileReader(link));) {
+			
 			String s;
 			do {
 				s = br.readLine();
-				//System.out.println("imamo s");
-				//System.out.println(s);
+	
 				red++;
 
 				String token[] = s.trim().split(",");
@@ -57,7 +55,7 @@ public class IO {
 					fs.setReziser((lista));
 					index++;
 				} else {
-					ArrayList<String> pom = new ArrayList();
+					ArrayList<String> pom = new ArrayList<String>();
 					pom.add(token[index]);
 					fs.setReziser(pom);
 					index++;
@@ -65,7 +63,7 @@ public class IO {
 				} catch (StringIndexOutOfBoundsException e) {
 					fs.setReziser(null);
 					index++;
-					exep++;
+					
 				}
 				
 
@@ -77,7 +75,7 @@ public class IO {
 						fs.setCast(lista);
 						index++;
 					} else {
-						ArrayList<String> pom = new ArrayList();
+						ArrayList<String> pom = new ArrayList<String>();
 						pom.add(token[index]);
 						fs.setCast(pom);
 
@@ -86,7 +84,7 @@ public class IO {
 				} catch (StringIndexOutOfBoundsException e) {
 					fs.setCast(null);
 					index++;
-					exep++;
+					
 				}
 				
 				// drzava
@@ -98,7 +96,7 @@ public class IO {
 						fs.setDrzava(lista.stream().collect(Collectors.toMap(String::hashCode, e -> e)));
 						index++;
 					} else {
-						ArrayList<String> pom = new ArrayList();
+						ArrayList<String> pom = new ArrayList<String>();
 						pom.add(token[index]);
 						fs.setDrzava(pom.stream().collect(Collectors.toMap(String::hashCode, e -> e)));
 
@@ -107,7 +105,7 @@ public class IO {
 				} catch (StringIndexOutOfBoundsException e) {
 					fs.setDrzava(null);
 					index++;
-//					exep++;
+
 				}
 				
 				
@@ -120,7 +118,7 @@ public class IO {
 					//e.printStackTrace();
 					fs.setGodina_izlazka(-1);
 					index++;
-					exep++;
+					
 				}finally {
 					index++;
 				}
@@ -142,7 +140,7 @@ public class IO {
 						fs.setListed_in(lista);
 						index++;
 					} else {
-						ArrayList<String> pom = new ArrayList();
+						ArrayList<String> pom = new ArrayList<String>();
 						pom.add(token[index]);
 						fs.setListed_in(pom);
 						index++;
@@ -150,11 +148,9 @@ public class IO {
 				} catch (Exception e) {
 					fs.setListed_in(null);
 					index++;
-					exep++;
+				
 				}
-				
-				
-				
+								
 				
 				//Opis
 				try {
@@ -167,18 +163,12 @@ public class IO {
 				} catch (Exception e) {
 					fs.setOpis(null);
 					index++;
-					exep++;
-				}
-				
+					
+				}				
 				
 
 				fsl.add(fs);
 				
-//				System.out.println("################################################################");
-//				for (String str : token) {
-//					System.out.println(str);
-//				}
-//				System.out.println("################################################################");
 
 			} while (s != null);
 
@@ -187,10 +177,11 @@ public class IO {
 			System.err.println("Greska pri citanju iz fajla");
 		} catch (NullPointerException np) {
 			System.err.println("ZAVRSILI SMO CIRANJE SVIH REDOVA");
-			np.printStackTrace();
+			//np.printStackTrace();	
 		} finally {
+			
 			System.out.println("procitali smo: " + red + " redova ");
-			System.out.println("IMALI SMO: " + exep + " exceptiona");
+			
 		}
 
 		return fsl;
@@ -198,7 +189,7 @@ public class IO {
 
 	public static ArrayList<String> listaKadTreba(String[] tokeni) {
 
-		ArrayList<String> novaLista = new ArrayList();
+		ArrayList<String> novaLista = new ArrayList<String>();
 
 		// Ubacimo prvi token bez "
 		novaLista.add(tokeni[index].substring(1).trim());
