@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class IO {
@@ -89,17 +91,31 @@ public class IO {
 				
 				// drzava
 				try {
-					
+					Random r = new Random();
 					if (token[index].charAt(0) == '"') {
 						// imamo niz
 						lista = listaKadTreba(token);
-						fs.setDrzava(lista.stream().collect(Collectors.toMap(String::hashCode, e -> e)));
+						//fs.setDrzava(lista.stream().collect(Collectors.toMap(String::hashCode, e -> e)));
+						
+						ArrayList<Drzava> array = new ArrayList<>();
+						
+						
+						
+						for (String d : lista) {
+							int i = 0;
+							Drzava drz = new Drzava(d, r.nextInt(1000), s.substring(0, 3));
+							array.add(drz);
+							
+						}
+						
+						fs.setDrzava(array);
 						index++;
 					} else {
-						ArrayList<String> pom = new ArrayList<String>();
-						pom.add(token[index]);
-						fs.setDrzava(pom.stream().collect(Collectors.toMap(String::hashCode, e -> e)));
-
+						ArrayList<Drzava> array = new ArrayList<>();
+						array.add(  new Drzava(token[index], r.nextInt(1000), s.substring(0, 3))  );
+						//fs.setDrzava(pom.stream().collect(Collectors.toMap(String::hashCode, e -> e)));
+						fs.setDrzava(array);
+						
 						index++;
 					}
 				} catch (StringIndexOutOfBoundsException e) {
