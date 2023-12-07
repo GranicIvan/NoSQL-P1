@@ -10,7 +10,7 @@ public class FilmSerija {
 	private String ime;
 	private ArrayList<String> reziser;
 	private ArrayList<String> cast;
-	private Map<Integer, String> drzava;
+	private ArrayList<Drzava> drzava;
 	private String datum_dodavanja;
 	private String ogranicenje;
 	private int godina_izlazka;
@@ -60,11 +60,13 @@ public class FilmSerija {
 	
 
 	
-	public Map<Integer, String> getDrzava() {
+
+
+	public ArrayList<Drzava> getDrzava() {
 		return drzava;
 	}
 
-	public void setDrzava(Map<Integer, String> drzava) {
+	public void setDrzava(ArrayList<Drzava> drzava) {
 		this.drzava = drzava;
 	}
 

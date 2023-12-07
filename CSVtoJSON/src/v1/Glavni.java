@@ -12,9 +12,9 @@ public class Glavni {
 		ArrayList<FilmSerija> filmoviSerije = IO.citanjeCSV("netflix_titles.csv");
 		
 //		System.out.println(filmoviSerije);
-//		for(FilmSerija fs : filmoviSerije) {
-//			System.out.println(fs);
-//		}
+		for(FilmSerija fs : filmoviSerije) {
+			System.out.println(fs);
+		}
 		
 		
 		try {
